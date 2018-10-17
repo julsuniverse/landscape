@@ -11,5 +11,6 @@
 |
 */
 
-Route::get('/', 'LandscapeController@search');
-Route::post('/upload', 'UploadController@upload')->name('upload');
+Route::get('/', 'SearchController@index');
+Route::post('/upload', 'SearchController@upload')->name('upload');
+Route::get('/show', 'SearchController@show')->name('show');

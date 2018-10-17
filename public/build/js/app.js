@@ -37228,7 +37228,7 @@ var render = function() {
             hideChangeButton: true,
             "custom-strings": {
               upload: "<h1>Bummer!</h1>",
-              drag: "Drag a photo of movie or TV-serial"
+              drag: "Завантажте фото"
             }
           },
           on: { change: _vm.onChange }
@@ -37250,7 +37250,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Find movie or TV-serial")]
+                [_vm._v("Пошук")]
               )
             ])
           : _vm._e()
