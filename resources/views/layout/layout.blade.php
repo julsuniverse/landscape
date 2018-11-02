@@ -7,14 +7,27 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <script src="{{ asset('build/js/app.js') }}" defer></script>
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <!--<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css"> -->
     <link href="{{ asset('build/css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-<div id="app">
-    <main class="py-4">
-        @yield('content')
-    </main>
+<body class="text-center">
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="app">
+    <header class="masthead mb-auto">
+        <div class="inner">
+            <h3 class="masthead-brand">Find landscape</h3>
+        </div>
+    </header>
+
+    @yield('content')
+
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+            <p>author: Julia Grabovskaya</p>
+        </div>
+    </footer>
+</div>
+<div id="spinner">
+    <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
 </div>
 </body>
 </html>

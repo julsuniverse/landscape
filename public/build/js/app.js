@@ -2258,6 +2258,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -37228,7 +37233,7 @@ var render = function() {
             hideChangeButton: true,
             "custom-strings": {
               upload: "<h1>Bummer!</h1>",
-              drag: "Завантажте фото"
+              drag: "Upload Your Photo"
             }
           },
           on: { change: _vm.onChange }
@@ -37238,20 +37243,22 @@ var render = function() {
         _vm._v(" "),
         _vm.image
           ? _c("div", { staticClass: "text-center" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      $event.stopPropagation()
-                      _vm.find()
+              _c("p", { staticClass: "lead" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-secondary",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        $event.stopPropagation()
+                        _vm.find()
+                      }
                     }
-                  }
-                },
-                [_vm._v("Пошук")]
-              )
+                  },
+                  [_vm._v("\n                    Find it!\n                ")]
+                )
+              ])
             ])
           : _vm._e()
       ],

@@ -23,14 +23,12 @@ class SearchController extends Controller
         $file = $request->file('photo');
         $path = $file->store('images');
 
-        $result = $this->analyzeImageService->getLandscape($path);
-
-        return route('show', ['result' => $result]);
+        return route('show', ['path' => $path]);
     }
 
     public function show(Request $request)
     {
-        $result = $request->result;
-        return view('search.show', compact('result'));
+        $landmark = $this->analyzeImageService->getLandmark($request->path);
+        return view('search.show', compact('landmark'));
     }
 }

@@ -10,16 +10,21 @@
                     :hideChangeButton=true
                     :custom-strings="{
               upload: '<h1>Bummer!</h1>',
-              drag: 'Завантажте фото'
+              drag: 'Upload Your Photo'
             }"
                     @change="onChange">
             </picture-input>
             <br/>
             <div class="text-center" v-if="image">
-                <button
-                        class="btn btn-primary"
-                        @click.prevent.stop="find()"
-                >Пошук</button>
+                <p class="lead">
+                    <button
+                            class="btn btn-lg btn-secondary"
+                            @click.prevent.stop="find()"
+                    >
+                        Find it!
+                    </button>
+                </p>
+
             </div>
         </form>
     </div>
