@@ -18,6 +18,14 @@ window.Vue = require('vue');
 
 Vue.component('upload-form', require('./components/UploadForm.vue'));
 
+import * as VueGoogleMaps from "vue2-google-maps";
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: "AIzaSyDVFMux2llPPuxDe1t01mtFCcTJkTAF4M0",
+    },
+});
+
 const app = new Vue({
     el: '#app'
 });
