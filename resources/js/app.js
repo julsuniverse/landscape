@@ -17,12 +17,13 @@ window.Vue = require('vue');
  */
 
 Vue.component('upload-form', require('./components/UploadForm.vue'));
+Vue.component('google-map', require('./components/GoogleMap.vue'));
 
 import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.use(VueGoogleMaps, {
     load: {
-        key: "AIzaSyDVFMux2llPPuxDe1t01mtFCcTJkTAF4M0",
+        key: "AIzaSyCKx8O5IXubnyYKt55eIo4df09igekS3qY",
     },
 });
 

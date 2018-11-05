@@ -11,5 +11,7 @@
         <h2>{{ $landmark->description }}</h2>
         <p>Location: {{ $landmark->location->lat }}, {{ $landmark->location->lng }}</p>
         <p>Coincidence: {{ $landmark->score }}%</p>
+
+        <google-map />
     </main>
 @endsection
