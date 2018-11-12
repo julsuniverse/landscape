@@ -4,7 +4,7 @@
                 ref="gmap"
                 :center="center"
                 :zoom="12"
-                style="width:100%;  height: 100vh;"
+                style="width:100%;  height: 400px;"
         >
 
             <gmap-marker
@@ -30,10 +30,13 @@
 <script>
     export default {
         name: "GoogleMap",
+        props: [
+            'lat', 'lng', 'description'
+        ],
         data() {
             return {
                 //a default center for the map
-                center: {lat: 52.511950, lng: 6.089625},
+                center: {lat: this.lat, lng: this.lng},
                 map: null,
                 infoContent: '',
                 infoWindowPos: {
@@ -51,22 +54,10 @@
                 },
                 markers: [
                     {
-                        name: "House of Aleida Greve",
-                        description: "description 1",
+                        name: this.lat,
+                        description: "",
                         date_build: "",
-                        position: {lat: 52.512942, lng: 6.089625}
-                    },
-                    {
-                        name: "House of Potgieter",
-                        description: "description 2",
-                        date_build: "",
-                        position: {lat: 52.511950, lng: 6.091056}
-                    },
-                    {
-                        name: "House of Johannes Cele",
-                        description: "description 3",
-                        date_build: "",
-                        position: {lat: 52.511047, lng: 6.091728}
+                        position: {lat: this.lat, lng: this.lng}
                     },
                 ],
             };

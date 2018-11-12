@@ -2342,10 +2342,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "GoogleMap",
+    props: ['lat', 'lng', 'description'],
     data: function data() {
         return {
             //a default center for the map
-            center: { lat: 52.511950, lng: 6.089625 },
+            center: { lat: this.lat, lng: this.lng },
             map: null,
             infoContent: '',
             infoWindowPos: {
@@ -2362,20 +2363,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             },
             markers: [{
-                name: "House of Aleida Greve",
-                description: "description 1",
+                name: this.lat,
+                description: "",
                 date_build: "",
-                position: { lat: 52.512942, lng: 6.089625 }
-            }, {
-                name: "House of Potgieter",
-                description: "description 2",
-                date_build: "",
-                position: { lat: 52.511950, lng: 6.091056 }
-            }, {
-                name: "House of Johannes Cele",
-                description: "description 3",
-                date_build: "",
-                position: { lat: 52.511047, lng: 6.091728 }
+                position: { lat: this.lat, lng: this.lng }
             }]
         };
     },
@@ -2431,7 +2422,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         getInfoWindowContent: function getInfoWindowContent(marker) {
-            return "<div class=\"card\">\n  <div class=\"card-image\">\n    <figure class=\"image is-4by3\">\n      <img src=\"https://bulma.io/images/placeholders/96x96.png\" alt=\"Placeholder image\">\n    </figure>\n  </div>\n  <div class=\"card-content\">\n    <div class=\"media\">\n      <div class=\"media-content\">\n        <p class=\"title is-4\">" + marker.name + "</p>\n      </div>\n    </div>\n    <div class=\"content\">\n      " + marker.description + "\n      <br>\n      <time datetime=\"2016-1-1\">" + marker.date_build + "</time>\n    </div>\n  </div>\n</div>";
+            return '<div class="card">\n  <div class="card-image">\n    <figure class="image is-4by3">\n      <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">\n    </figure>\n  </div>\n  <div class="card-content">\n    <div class="media">\n      <div class="media-content">\n        <p class="title is-4">' + marker.name + '</p>\n      </div>\n    </div>\n    <div class="content">\n      ' + marker.description + '\n      <br>\n      <time datetime="2016-1-1">' + marker.date_build + '</time>\n    </div>\n  </div>\n</div>';
         }
     }
 });
@@ -37626,7 +37617,7 @@ var render = function() {
         "gmap-map",
         {
           ref: "gmap",
-          staticStyle: { width: "100%", height: "100vh" },
+          staticStyle: { width: "100%", height: "400px" },
           attrs: { center: _vm.center, zoom: 12 }
         },
         [

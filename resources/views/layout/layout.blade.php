@@ -11,7 +11,7 @@
     <link href="{{ asset('build/css/app.css') }}" rel="stylesheet">
 </head>
 <body class="text-center">
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="app">
+<div class="cover-container d-flex w-500 h-100 p-3 mx-auto flex-column" id="app">
     <header class="masthead mb-auto">
         <div class="inner">
             <h3 class="masthead-brand">Find landscape</h3>
