@@ -10589,3 +10589,9 @@ body {
   color: #999;
 }
 
+.pagination li a {
+  background-color: #727272;
+  border-color: #313131;
+  color: #fff;
+}
+

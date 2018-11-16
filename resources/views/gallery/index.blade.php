@@ -1,6 +1,7 @@
 @extends('layout.layout')
 
 @section('content')
+    <h1>Your Places Gallery</h1>
     <div class="row">
         @foreach($places as $place)
         <div class="col-md-3">
@@ -16,4 +17,10 @@
         </div>
         @endforeach
     </div>
+    <div class="row text-center">
+        <div class="col-12 mt-md-5 m-auto">
+            {{ $places->links() }}
+        </div>
+    </div>
+
 @endsection
