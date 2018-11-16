@@ -10511,7 +10511,7 @@ body {
 }
 
 .cover-container {
-  max-width: 150em;
+  max-width: 250em;
 }
 
 /*
@@ -10578,5 +10578,14 @@ body {
 
 .mastfoot {
   color: rgba(255, 255, 255, 0.5);
+}
+
+.login-card {
+  color: #2e2e2e;
+  text-shadow: none;
+}
+
+.login-card .btn-link {
+  color: #999;
 }
 

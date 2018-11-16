@@ -14,3 +14,7 @@
 Route::get('/', 'SearchController@index');
 Route::post('/upload', 'SearchController@upload')->name('upload');
 Route::get('/show', 'SearchController@show')->name('show');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

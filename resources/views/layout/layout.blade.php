@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <script src="{{ asset('build/js/app.js') }}" defer></script>
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
     <!--<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css"> -->
     <link href="{{ asset('build/css/app.css') }}" rel="stylesheet">
 </head>
@@ -15,6 +15,32 @@
     <header class="masthead mb-auto">
         <div class="inner">
             <h3 class="masthead-brand">Find landscape</h3>
+            <nav class="nav nav-masthead justify-content-center">
+                @guest
+                    <a class="nav-link active" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    @if (Route::has('register'))
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    @endif
+                @else
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ \Auth::user()->name }} <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                @endguest
+            </nav>
         </div>
     </header>
 
