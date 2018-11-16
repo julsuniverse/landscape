@@ -14,10 +14,12 @@
 <div class="cover-container d-flex w-500 h-100 p-3 mx-auto flex-column" id="app">
     <header class="masthead mb-auto">
         <div class="inner">
-            <h3 class="masthead-brand">Find landscape</h3>
+            <h3 class="masthead-brand">
+                <a href="{{ route('home') }}">Find landscape</a>
+            </h3>
             <nav class="nav nav-masthead justify-content-center">
                 @guest
-                    <a class="nav-link active" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     @if (Route::has('register'))
                         <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                     @endif
@@ -39,6 +41,7 @@
                             </form>
                         </div>
                     </li>
+                    <a class="nav-link ml-5" href="{{ route('gallery') }}">Your Places Gallery</a>
                 @endguest
             </nav>
         </div>
