@@ -2342,7 +2342,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "GoogleMap",
-    props: ['lat', 'lng', 'description'],
+    props: ['lat', 'lng', 'desc', 'img'],
     data: function data() {
         return {
             //a default center for the map
@@ -2363,10 +2363,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             },
             markers: [{
-                name: this.lat,
+                name: this.desc,
                 description: "",
                 date_build: "",
-                position: { lat: this.lat, lng: this.lng }
+                position: { lat: this.lat, lng: this.lng },
+                img: this.img
             }]
         };
     },
@@ -2403,6 +2404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             map.fitBounds(bounds);
         });
+        this.geolocation();
     },
 
     methods: {
@@ -2420,9 +2422,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.currentMidx = idx;
                 }
         },
+        geolocation: function geolocation() {
+            var _this2 = this;
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                _this2.markers.push({
+                    name: "You are here",
+                    description: "",
+                    date_build: "",
+                    position: { lat: position.coords.latitude, lng: position.coords.longitude }
+                });
+            });
+        },
 
         getInfoWindowContent: function getInfoWindowContent(marker) {
-            return '<div class="card">\n  <div class="card-image">\n    <figure class="image is-4by3">\n      <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">\n    </figure>\n  </div>\n  <div class="card-content">\n    <div class="media">\n      <div class="media-content">\n        <p class="title is-4">' + marker.name + '</p>\n      </div>\n    </div>\n    <div class="content">\n      ' + marker.description + '\n      <br>\n      <time datetime="2016-1-1">' + marker.date_build + '</time>\n    </div>\n  </div>\n</div>';
+            var html = '<div class="card">';
+            if (marker.img) {
+                html += '<div class="card-image">\n                    <figure class="image is-4by3">\n                      <img src="' + marker.img + '" width="100px">\n                    </figure>\n                  </div>';
+            }
+
+            html += '<div class="card-content">\n                <div class="media">\n                  <div class="media-content">\n                    <p class="title is-4 text-dark" >' + marker.name + '</p>\n                  </div>\n                </div>\n              </div>\n             </div>';
+
+            return html;
         }
     }
 });

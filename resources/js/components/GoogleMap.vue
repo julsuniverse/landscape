@@ -31,7 +31,7 @@
     export default {
         name: "GoogleMap",
         props: [
-            'lat', 'lng', 'description'
+            'lat', 'lng', 'desc', 'img'
         ],
         data() {
             return {
@@ -54,10 +54,11 @@
                 },
                 markers: [
                     {
-                        name: this.lat,
+                        name: this.desc,
                         description: "",
                         date_build: "",
-                        position: {lat: this.lat, lng: this.lng}
+                        position: {lat: this.lat, lng: this.lng},
+                        img: this.img
                     },
                 ],
             };
@@ -65,12 +66,13 @@
         mounted() {
             //set bounds of the map
             this.$refs.gmap.$mapPromise.then((map) => {
-                const bounds = new google.maps.LatLngBounds()
+                const bounds = new google.maps.LatLngBounds();
                 for (let m of this.markers) {
                     bounds.extend(m.position)
                 }
                 map.fitBounds(bounds);
             });
+            this.geolocation();
         },
         methods: {
             toggleInfoWindow: function (marker, idx) {
@@ -88,27 +90,40 @@
                     this.currentMidx = idx;
                 }
             },
+            geolocation : function() {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    this.markers.push({
+                        name: "You are here",
+                        description: "",
+                        date_build: "",
+                        position: {lat: position.coords.latitude, lng:  position.coords.longitude}
+                    });
+                });
+            },
 
             getInfoWindowContent: function (marker) {
-                return (`<div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-content">
-        <p class="title is-4">${marker.name}</p>
-      </div>
-    </div>
-    <div class="content">
-      ${marker.description}
-      <br>
-      <time datetime="2016-1-1">${marker.date_build}</time>
-    </div>
-  </div>
-</div>`);
+                let html =
+                    `<div class="card">`;
+                if(marker.img) {
+                    html +=
+                     `<div class="card-image">
+                        <figure class="image is-4by3">
+                          <img src="${marker.img}" width="100px">
+                        </figure>
+                      </div>`;
+                }
+
+                html +=
+                 `<div class="card-content">
+                    <div class="media">
+                      <div class="media-content">
+                        <p class="title is-4 text-dark" >${marker.name}</p>
+                      </div>
+                    </div>
+                  </div>
+                 </div>`;
+
+                return html;
             },
         }
     };

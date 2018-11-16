@@ -18,7 +18,8 @@
                 <google-map
                         :lat="{{ $landmark->location->lat }}"
                         :lng="{{ $landmark->location->lng }}"
-
+                        :desc="'{{ $landmark->description }}'"
+                        :img="' {{ $landmark->img }}'"
                 />
             </div>
         </div>
