@@ -11,6 +11,9 @@
                 </p>
 
                 <h2>{{ $landmark->description }}</h2>
+                <google-address
+                        :lat="{{ $landmark->location->lat }}"
+                        :lng="{{ $landmark->location->lng }}"></google-address>
                 <p>Location: {{ $landmark->location->lat }}, {{ $landmark->location->lng }}</p>
                 <p>Coincidence: {{ $landmark->score }}%</p>
             </div>

@@ -65,6 +65,129 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@pderas/vue2-geocoder/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    install(Vue, options) {
+        Vue.$geocoder = Vue.prototype.$geocoder = {
+            defaultCountryCode: null,
+            defaultMode:        'address',
+            googleMapsApiKey:   options.googleMapsApiKey,
+            googleMapsUrl:      'https://maps.googleapis.com/maps/api/geocode/json',
+
+            createRequestObject(url, callback = null) {
+                var xhr = new XMLHttpRequest();
+
+                /* Register callback functions */
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        if (callback) {
+                            callback(xhr.response);
+                        }
+                    }
+                }
+
+                xhr.responseType = "json";
+                xhr.open("GET", url);
+
+                return xhr;
+            },
+
+            getDefaultUrl() {
+                var url = this.googleMapsUrl;
+
+                url += "?key=" + encodeURIComponent(this.googleMapsApiKey);
+                if (this.defaultCountryCode) {
+                    url += "&components=country:" + this.defaultCountryCode;
+                }
+
+                return url;
+            },
+
+            send(dataObj, callback = null) {
+                switch (this.defaultMode) {
+                    case 'lat-lng':
+                        this.getGoogleResponseFromLatLng(dataObj, callback);
+                        break;
+
+                    case 'address':
+                    default:
+                        this.getGoogleResponseFromAddress(dataObj, callback);
+                        break;
+                }
+            },
+
+            getGoogleResponseFromAddress(locationObj, callback = null) {
+                var address  = this.toAddressString(locationObj);
+                var url = this.getDefaultUrl();
+
+                /* Add query parameters */
+                url += "&address=" + encodeURIComponent(address);
+
+                var xhr = this.createRequestObject(url, callback)
+                xhr.send();
+            },
+
+            getGoogleResponseFromLatLng(latLngObj, callback = null) {
+                var url = this.getDefaultUrl();
+
+                /* Add query parameters */
+                url += "&latlng=" + encodeURIComponent(latLngObj.lat) + "," + encodeURIComponent(latLngObj.lng);
+
+                var xhr = this.createRequestObject(url, callback)
+                xhr.send();
+            },
+
+            toAddressString(locationObj) {
+                var addressStr = '';
+                if (locationObj) {
+                    addressStr += locationObj.address_line_1 ? locationObj.address_line_1 + ' ' : '';
+                    addressStr += locationObj.address_line_2 ? locationObj.address_line_2 + ' ' : '';
+                    addressStr += locationObj.city ? locationObj.city + ', ' : '';
+                    if (locationObj.province || locationObj.postal_code) {
+                        addressStr += locationObj.province ? locationObj.province + ', ' : '';
+                        addressStr += locationObj.postal_code ? locationObj.postal_code + ', ' : '';
+                    } else {
+                        addressStr += locationObj.state ? locationObj.state + ', ' : '';
+                        addressStr += locationObj.zip_code ? locationObj.zip_code + ', ' : '';
+                    }
+                    addressStr += locationObj.country ? locationObj.country: '';
+                }
+                return addressStr;
+            },
+
+            setDefaultCountryCode(code) {
+                this.defaultCountryCode = code;
+            },
+
+            setDefaultMode(mode) {
+                this.defaultMode = mode == 'address' ? mode : 'lat-lng';
+            },
+
+            setGoogleMapsApiKey(key) {
+                this.googleMapsApiKey = key;
+            },
+
+            getDefaultCountryCode() {
+                return this.defaultCountryCode;
+            },
+
+            getDefaultMode() {
+                return this.defaultMode;
+            },
+
+            getGoogleMapsApiKey() {
+                return this.googleMapsApiKey;
+            }
+        }
+    }
+});
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2302,6 +2425,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ((function (x) {
   return x.default || x;
 })(__webpack_require__("./node_modules/vue2-google-maps/dist/components/streetViewPanoramaImpl.js")));
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Address.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "Address",
+    props: ['lat', 'lng'],
+    data: function data() {
+        return {
+            address: null
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        Vue.$geocoder.setDefaultMode('lat-lng');
+        var latLngObj = {
+            lat: this.lat,
+            lng: this.lng
+        };
+        Vue.$geocoder.send(latLngObj, function (response) {
+            _this.address = response.results[0].formatted_address;
+            console.log('address', _this.address);
+        });
+    }
+});
 
 /***/ }),
 
@@ -37852,6 +38010,27 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-f534a94e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Address.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("p", [_c("b", [_vm._v(_vm._s(_vm.address))])])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-f534a94e", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-picture-input/PictureInput.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51494,6 +51673,7 @@ module.exports = function(module) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_google_maps__ = __webpack_require__("./node_modules/vue2-google-maps/dist/main.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_google_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue2_google_maps__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pderas_vue2_geocoder__ = __webpack_require__("./node_modules/@pderas/vue2-geocoder/index.js");
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -51514,6 +51694,8 @@ window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
 Vue.component('upload-form', __webpack_require__("./resources/js/components/UploadForm.vue"));
 Vue.component('google-map', __webpack_require__("./resources/js/components/GoogleMap.vue"));
+Vue.component('google-address', __webpack_require__("./resources/js/components/Address.vue"));
+
 
 
 
@@ -51521,6 +51703,10 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue2_google_maps__, {
     load: {
         key: "AIzaSyCKx8O5IXubnyYKt55eIo4df09igekS3qY"
     }
+});
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_1__pderas_vue2_geocoder__["a" /* default */], {
+    googleMapsApiKey: "AIzaSyCKx8O5IXubnyYKt55eIo4df09igekS3qY"
 });
 
 var app = new Vue({
@@ -51588,6 +51774,54 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/Address.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Address.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-f534a94e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Address.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Address.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f534a94e", Component.options)
+  } else {
+    hotAPI.reload("data-v-f534a94e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
 

@@ -18,13 +18,19 @@ window.Vue = require('vue');
 
 Vue.component('upload-form', require('./components/UploadForm.vue'));
 Vue.component('google-map', require('./components/GoogleMap.vue'));
+Vue.component('google-address', require('./components/Address.vue'));
 
 import * as VueGoogleMaps from "vue2-google-maps";
+import Geocoder from "@pderas/vue2-geocoder";
 
 Vue.use(VueGoogleMaps, {
     load: {
         key: "AIzaSyCKx8O5IXubnyYKt55eIo4df09igekS3qY",
     },
+});
+
+Vue.use(Geocoder, {
+    googleMapsApiKey: "AIzaSyCKx8O5IXubnyYKt55eIo4df09igekS3qY"
 });
 
 const app = new Vue({

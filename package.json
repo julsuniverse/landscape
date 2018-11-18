@@ -20,6 +20,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "@pderas/vue2-geocoder": "github:pderas/vue2-geocoder",
         "vue-picture-input": "^2.1.6",
         "vue2-google-maps": "^0.10.2",
         "vuetify": "^1.2.6"
