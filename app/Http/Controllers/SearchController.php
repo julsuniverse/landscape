@@ -37,7 +37,11 @@ class SearchController extends Controller
 
     public function show(Request $request)
     {
-        $landmark = $this->analyzeImageService->getLandmark($request->path);
+        try {
+            $landmark = $this->analyzeImageService->getLandmark($request->path);
+        } catch (\Exception $e) {
+            return redirect('/')->withErrors([$e->getMessage()]);
+        }
         if ($user = \Auth::user()) {
             $this->placeRepository->create($landmark, $user, $request->path);
         }

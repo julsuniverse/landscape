@@ -5,7 +5,7 @@
     <div class="row">
         @foreach($places as $place)
         <div class="col-md-3">
-            <div class="border border-secondary">
+            <div class="border border-secondary gallery-block">
                 <div>
                     <img src="{{ asset($place->photo) }}" class="img-fluid">
                 </div>

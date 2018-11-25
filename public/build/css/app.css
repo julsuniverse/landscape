@@ -10595,3 +10595,11 @@ body {
   color: #fff;
 }
 
+.gallery-block {
+  height: 355px;
+}
+
+.gallery-block img {
+  height: 233px;
+}
+

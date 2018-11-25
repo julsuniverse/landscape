@@ -24,6 +24,10 @@ class AnalyzeImage
         /** @var AnnotateImageResponse $response */
         $response = $imageAnnotator->landmarkDetection($image);
         /** @var EntityAnnotation $landmarkObj */
+        if(!isset($response->getLandmarkAnnotations()[0])) {
+            throw new \DomainException('Sorry, no landscape was found. Try another photo.');
+        }
+        $landmarkObj = $response->getLandmarkAnnotations()[0];
         $landmarkObj = $response->getLandmarkAnnotations()[0];
         $imageAnnotator->close();
 
